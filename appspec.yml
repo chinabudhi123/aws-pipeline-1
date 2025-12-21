@@ -5,28 +5,18 @@ files:
   - source: /httpd
     destination: /var/www/html
 
-permissions:
-  - object: /var/www/html
-    owner: apache
-    group: apache
-    mode: 755
-    type:
-      - file
-      - directory
-
 hooks:
   BeforeInstall:
+    - location: scripts/cleanup.sh
+      runas: root
     - location: scripts/install_httpd.sh
-      timeout: 300
       runas: root
 
   ApplicationStop:
     - location: scripts/stop_httpd.sh
-      timeout: 300
       runas: root
 
   ApplicationStart:
     - location: scripts/start_httpd.sh
-      timeout: 300
       runas: root
 
